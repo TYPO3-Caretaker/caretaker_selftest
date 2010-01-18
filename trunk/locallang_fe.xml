@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for plugin caretaker single view</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="message">The dummy test returned ###VALUE###, state ###STATE### and exra value ###VALUE_FOO### </label>
+			<label index="detail">Detail info: ###VALUE_BAR### </label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="message">Der Dummy test hat den Wert ###VALUE###, Status ###STATE### und den Extrawert ###VALUE_FOO### ###VALUE_BAR### zurückgegeben</label>
+			<label index="detail">Detailinformation: ###VALUE_BAR### </label>
+		</languageKey>
+	</data>
+</T3locallang>
