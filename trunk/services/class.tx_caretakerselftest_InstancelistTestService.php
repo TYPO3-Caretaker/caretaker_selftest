@@ -44,7 +44,7 @@
  * @author Tobias Liebig <liebig@networkteam.com>
  *
  * @package TYPO3
- * @subpackage caretaker_dummy
+ * @subpackage caretaker_selftest
  */
 class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServiceBase {
 
@@ -52,7 +52,6 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 
 		$config = $this->getConfiguration();
 
-		print_r ($config);
 			// get list of instances
 		switch ($config['mode']){
 			case 'plain' : 
@@ -71,12 +70,18 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 			
 		}
 
-		print_r ($instance_urls);
-
 		$submessages = array();
 		$state    = TX_CARETAKER_STATE_OK;
 
 		foreach ($instance_urls as $instance_url){
+			
+			$instance_url = trim($instance_url);
+
+				// ignore empty and commentlines
+			if (strpos('#' , $instance_url) === 0 || $instance_url == ''  ) {
+				break;
+			}
+			
 			// get Instance Record and check that the Instance is enabled
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_caretaker_instance', 'deleted=0 AND url = '. $GLOBALS['TYPO3_DB']->fullQuoteStr($instance_url, 'tx_caretaker_instance') );
 			if ( $instance = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res) ){
@@ -90,6 +95,7 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 			}
 
 		}
+
 
 		return 	tx_caretaker_TestResult::create( $state, 0, 'Instancelist Selftest returned ###STATE###' , $submessages );
 		
