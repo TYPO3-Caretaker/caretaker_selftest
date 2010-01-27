@@ -62,16 +62,16 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 				if ( $httpResult['response'] && $httpResult['info']['http_code'] == 200 ){
 					$instance_urls = explode ( chr(10), $httpResult['response'] );
 				} else {
-					return 	tx_caretaker_TestResult::create(TX_CARETAKER_STATE_ERROR, 0, 'Instancelist Url could not be fetched ' . $config['instancelist_url']  );
+					return 	tx_caretaker_TestResult::create(tx_caretaker_Constants::state_error, 0, 'Instancelist Url could not be fetched ' . $config['instancelist_url']  );
 				}
 				break;
 			default:
-				return 	tx_caretaker_TestResult::create(TX_CARETAKER_STATE_ERROR, 0, 'Plase select how to get the Instancelist' );
+				return 	tx_caretaker_TestResult::create(tx_caretaker_Constants::state_error, 0, 'Plase select how to get the Instancelist' );
 			
 		}
 
 		$submessages = array();
-		$state    = TX_CARETAKER_STATE_OK;
+		$state    = tx_caretaker_Constants::state_ok;
 
 		foreach ($instance_urls as $instance_url){
 			
@@ -87,11 +87,11 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 			if ( $instance = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res) ){
 				if ($instance['hidden'] != 0){
 					$submessages[] = new tx_caretaker_ResultMessage('Instance Record with URL ###VALUE_URL### was hidden.' , array( 'url' => $instance_url ) );
-					if ($state < TX_CARETAKER_STATE_ERROR ) $state = TX_CARETAKER_STATE_ERROR;
+					if ($state < tx_caretaker_Constants::state_error ) $state = tx_caretaker_Constants::state_error;
 				}
 			} else {
 				$submessages[] = new tx_caretaker_ResultMessage('No Instance Record with URL ###VALUE_URL### found.' , array( 'url' => $instance_url ) );
-				if ($state < TX_CARETAKER_STATE_ERROR ) $state = TX_CARETAKER_STATE_ERROR;
+				if ($state < tx_caretaker_Constants::state_error ) $state = tx_caretaker_Constants::state_error;
 			}
 
 		}
