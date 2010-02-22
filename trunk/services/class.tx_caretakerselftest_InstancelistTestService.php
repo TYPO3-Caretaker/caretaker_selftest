@@ -82,8 +82,18 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 				break;
 			}
 			
-			// get Instance Record and check that the Instance is enabled
-			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_caretaker_instance', 'deleted=0 AND url = '. $GLOBALS['TYPO3_DB']->fullQuoteStr($instance_url, 'tx_caretaker_instance') );
+				// find instances even if they use http-authentication
+			$instance_url_auth = str_replace ( '://' , '://%:%@' , $instance_url );
+
+				// get Instance Record and check that the Instance is enabled
+			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery( '*', 'tx_caretaker_instance',
+					'deleted=0 AND ( ' .
+						' url = '. $GLOBALS['TYPO3_DB']->fullQuoteStr($instance_url, 'tx_caretaker_instance') .
+						' OR ' .
+						' url LIKE ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($instance_url_auth, 'tx_caretaker_instance') .
+						' ) '
+					);
+
 			if ( $instance = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res) ){
 				if ($instance['hidden'] != 0){
 					$submessages[] = new tx_caretaker_ResultMessage('Instance Record with URL ###VALUE_URL### was hidden.' , array( 'url' => $instance_url ) );
