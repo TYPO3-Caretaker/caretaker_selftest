@@ -86,7 +86,7 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 			$instance_url_auth = str_replace ( '://' , '://%:%@' , $instance_url );
 
 				// find instances even if the instance record uses https url
-			$instance_url_auth = str_replace ( 'http://' , 'http%://' , $instance_url );
+			$instance_url_https = str_replace ( 'http://' , 'https://' , $instance_url );
 
 				// get Instance Record and check that the Instance is enabled
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery( '*', 'tx_caretaker_instance',
@@ -94,7 +94,9 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 						' url = '. $GLOBALS['TYPO3_DB']->fullQuoteStr($instance_url, 'tx_caretaker_instance') .
 						' OR ' .
 						' url LIKE ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($instance_url_auth, 'tx_caretaker_instance') .
-						' ) '
+						' OR ',
+						' url LIKE ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($instance_url_https, 'tx_caretaker_instance') .
+						' )'
 					);
 
 			if ( $instance = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res) ){
