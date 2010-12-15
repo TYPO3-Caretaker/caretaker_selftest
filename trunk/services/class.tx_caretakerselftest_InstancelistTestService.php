@@ -82,8 +82,11 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 				break;
 			}
 			
-				// find instances even if they use http-authentication
+				// find instances even if they use http-authentication 
 			$instance_url_auth = str_replace ( '://' , '://%:%@' , $instance_url );
+
+				// find instances even if the instance record uses https url
+			$instance_url_auth = str_replace ( 'http://' , 'http%://' , $instance_url );
 
 				// get Instance Record and check that the Instance is enabled
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery( '*', 'tx_caretaker_instance',
