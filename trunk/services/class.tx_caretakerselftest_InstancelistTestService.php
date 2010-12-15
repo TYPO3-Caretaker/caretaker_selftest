@@ -94,7 +94,7 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 						' url = '. $GLOBALS['TYPO3_DB']->fullQuoteStr($instance_url, 'tx_caretaker_instance') .
 						' OR ' .
 						' url LIKE ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($instance_url_auth, 'tx_caretaker_instance') .
-						' OR ',
+						' OR ' .
 						' url = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($instance_url_https, 'tx_caretaker_instance') .
 						' )'
 					);
