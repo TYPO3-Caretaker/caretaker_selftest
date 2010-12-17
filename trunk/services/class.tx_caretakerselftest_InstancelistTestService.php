@@ -59,8 +59,8 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 				break;
 			case 'url'   :
 				$url = $config['instancelist_url'];
-				if ( strpos( '://' , $url) === false ) {
-					$url = $this->getInstanceUrl() . $url;
+				if ( strpos( $url, '://' ) === false ) {
+					$url = $this->getInstanceUrl() . '/' . $url;
 				}
 				$httpResult = $this->executeHttpRequest( $config['instancelist_url'] );
 				if ( $httpResult['response'] && $httpResult['info']['http_code'] == 200 ){
