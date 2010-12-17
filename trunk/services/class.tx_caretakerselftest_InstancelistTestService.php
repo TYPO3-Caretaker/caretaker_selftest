@@ -62,11 +62,11 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 				if ( strpos( $url, '://' ) === false && $this->instance) {
 					$url = $this->instance->getUrl() . '/' . $url;
 				}
-				$httpResult = $this->executeHttpRequest( $config['instancelist_url'] );
+				$httpResult = $this->executeHttpRequest( $url );
 				if ( $httpResult['response'] && $httpResult['info']['http_code'] == 200 ){
 					$instance_urls = explode ( chr(10), $httpResult['response'] );
 				} else {
-					return 	tx_caretaker_TestResult::create(tx_caretaker_Constants::state_error, 0, 'Instancelist Url could not be fetched ' . $config['instancelist_url']  );
+					return 	tx_caretaker_TestResult::create(tx_caretaker_Constants::state_error, 0, 'Instancelist Url could not be fetched ' . $url );
 				}
 				break;
 			default:
