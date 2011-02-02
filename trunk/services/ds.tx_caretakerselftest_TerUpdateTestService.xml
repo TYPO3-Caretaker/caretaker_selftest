@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<ROOT>
+		<TCEforms>
+			<sheetTitle>HTTP-Communication</sheetTitle>
+		</TCEforms>
+		<type>array</type>
+		<el>
+			<maxAge>
+				<TCEforms>
+					<label>Max age of last TER-Update</label>
+					<config>
+						<type>select</type>
+					    <items>
+					    	<numIndex index="0">
+					    		<numIndex index="0">1 Hour</numIndex>
+								<numIndex index="1">3600</numIndex>
+					    	</numIndex>
+					    	<numIndex index="1">
+					    		<numIndex index="0">4 Hours</numIndex>
+								<numIndex index="1">14400</numIndex>
+					    	</numIndex>
+							<numIndex index="2">
+					    		<numIndex index="0">1 Day</numIndex>
+								<numIndex index="1">86400</numIndex>
+					    	</numIndex>
+							<numIndex index="3">
+					    		<numIndex index="0">2 Days</numIndex>
+								<numIndex index="1">172800</numIndex>
+					    	</numIndex>
+							<numIndex index="4">
+					    		<numIndex index="0">1 Week</numIndex>
+								<numIndex index="1">604800</numIndex>
+					    	</numIndex>
+					  	</items>
+					  	<default>86400</default>
+					</config>
+				</TCEforms>
+			</maxAge>
+		</el>
+	</ROOT>
+</T3DataStructure>
