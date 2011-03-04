@@ -86,7 +86,7 @@ class tx_caretakerselftest_TerUpdateTestService extends tx_caretaker_TestService
 			if ( $repository['lastUpdated'] < $minTimstamp ){
 				$errors[] = new tx_caretaker_ResultMessage( 'ERROR: Extension-repository ' . $repository['title'] . ' was not up to date. Last update was on ' . strftime ( '%x %X' ,  $repository['lastUpdated'] ) );
 			} else {
-				$ok = new tx_caretaker_ResultMessage( 'OK: Extension-repository ' . $repository['title'] . ' is up to date. Last update was on ' . strftime ( '%x %X' ,  $repository['lastUpdated'] ) );
+				$ok[] = new tx_caretaker_ResultMessage( 'OK: Extension-repository ' . $repository['title'] . ' is up to date. Last update was on ' . strftime ( '%x %X' ,  $repository['lastUpdated'] ) );
 			}
 		}
 		
