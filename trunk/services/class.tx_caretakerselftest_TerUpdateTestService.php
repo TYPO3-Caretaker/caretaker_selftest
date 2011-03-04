@@ -91,9 +91,9 @@ class tx_caretakerselftest_TerUpdateTestService extends tx_caretaker_TestService
 		}
 		
 		if ( count($errors) > 0 ){
-			return tx_caretaker_TestResult::create( tx_caretaker_Constants::state_error, $age, count($errors) . ' extension repositories have to be updated. ' . count($ok)  . ' extension repositories are ok. ' );
+			return tx_caretaker_TestResult::create( tx_caretaker_Constants::state_error, $age, count($errors) . ' extension repositories have to be updated. ' . count($ok)  . ' extension repositories are ok. ' , array_merge( $errors, $ok ) );
 		} else {
-			return tx_caretaker_TestResult::create( tx_caretaker_Constants::state_ok, $age, count($ok)  . ' extension repositories are ok. ' );
+			return tx_caretaker_TestResult::create( tx_caretaker_Constants::state_ok, $age, count($ok)  . ' extension repositories are ok. ', $ok );
 		}
 
 	}
