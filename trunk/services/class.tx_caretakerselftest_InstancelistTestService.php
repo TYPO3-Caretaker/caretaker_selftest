@@ -82,8 +82,8 @@ class tx_caretakerselftest_InstancelistTestService extends tx_caretaker_TestServ
 			$instance_url = trim($instance_url);
 
 				// ignore empty and commentlines
-			if (strpos('#' , $instance_url) === 0 || $instance_url == ''  ) {
-				break;
+			if ( $instance_url == '' || strpos('#' , $instance_url) === 0 ) {
+				continue;
 			}
 			
 				// find instances even if they use http-authentication 
