@@ -52,8 +52,10 @@ class tx_caretakerselftest_TerUpdateTestService extends tx_caretaker_TestService
 
 		if ( t3lib_div::int_from_ver( TYPO3_version ) < t3lib_div::int_from_ver( '4.5.0' ) ){
 			return $this->runTest400();
-		} else {
+		} elseif( t3lib_div::int_from_ver( TYPO3_version ) < t3lib_div::int_from_ver( '6.0.0' ) ) {
 			return $this->runTest450();
+		} else {
+			return $this->runTest600();
 		}
 		
 	}
@@ -91,9 +93,34 @@ class tx_caretakerselftest_TerUpdateTestService extends tx_caretaker_TestService
 		}
 		
 		if ( count($errors) > 0 ){
-			return tx_caretaker_TestResult::create( tx_caretaker_Constants::state_error, $age, count($errors) . ' extension repositories have to be updated. ' . count($ok)  . ' extension repositories are ok. ' , array_merge( $errors, $ok ) );
+			return tx_caretaker_TestResult::create( tx_caretaker_Constants::state_error, $minTimstamp, count($errors) . ' extension repositories have to be updated. ' . count($ok)  . ' extension repositories are ok. ' , array_merge( $errors, $ok ) );
 		} else {
-			return tx_caretaker_TestResult::create( tx_caretaker_Constants::state_ok, $age, count($ok)  . ' extension repositories are ok. ', $ok );
+			return tx_caretaker_TestResult::create( tx_caretaker_Constants::state_ok, $minTimstamp, count($ok)  . ' extension repositories are ok. ', $ok );
+		}
+
+	}
+
+	private function runTest600(){
+		$config = $this->getConfiguration();
+		$minTimstamp = time() - $config['maxAge'];
+
+		$repositories = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows ( '*', 'tx_extensionmanager_domain_model_repository', '1' );
+
+		$errors = array();
+		$ok = array();
+
+		foreach( $repositories as $repository ){
+			if ( $repository['last_update'] < $minTimstamp ){
+				$errors[] = new tx_caretaker_ResultMessage( 'ERROR: Extension-repository ' . $repository['title'] . ' was not up to date. Last update was on ' . strftime ( '%x %X' ,  $repository['last_update'] ) );
+			} else {
+				$ok[] = new tx_caretaker_ResultMessage( 'OK: Extension-repository ' . $repository['title'] . ' is up to date. Last update was on ' . strftime ( '%x %X' ,  $repository['last_update'] ) );
+			}
+		}
+
+		if ( count($errors) > 0 ){
+			return tx_caretaker_TestResult::create( tx_caretaker_Constants::state_error, $minTimstamp, count($errors) . ' extension repositories have to be updated. ' . count($ok)  . ' extension repositories are ok. ' , array_merge( $errors, $ok ) );
+		} else {
+			return tx_caretaker_TestResult::create( tx_caretaker_Constants::state_ok, $minTimstamp, count($ok)  . ' extension repositories are ok. ', $ok );
 		}
 
 	}
